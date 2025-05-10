@@ -69,25 +69,24 @@ create table timing (
 create table categories (
                         id int not null auto_increment,
                         nom varchar(255) default null,
+                        unite varchar(10) default null,
                         primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 create table ingredients (
     id int not null auto_increment,
     nom varchar(255) default null,
+    proteines int default null,
     glucides int default null,
     lipides int default null,
     calories int default null,
     id_saison int default null,
     id_categorie int default null,
-    id_timing int default null,
     primary key (id),
     key id_saison (id_saison),
     key id_categorie (id_categorie),
-    key id_timing (id_timing),
     constraint ingredients_ibfk_1 foreign key (id_saison) references saisons(id),
-    constraint ingredients_ibfk_2 foreign key (id_categorie) references categories(id),
-    constraint ingredients_ibfk_3 foreign key (id_timing) references timing(id)
+    constraint ingredients_ibfk_2 foreign key (id_categorie) references categories(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 create table recettes(
@@ -139,4 +138,13 @@ create table recette_outils (
     primary key (id_outil,id_recette),
     constraint recette_outils_ibfk_1 foreign key (id_outil) references outils(id_outil),
     constraint recette_outils_ibfk_2 foreign key (id_recette) references recettes(id)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE recettes_ingredients (
+                                      id_recette INT NOT NULL,
+                                      id_ingredient int not null,
+                                      PRIMARY KEY (id_recette,id_ingredient),
+                                      KEY recette_id (id_recette),
+                                      CONSTRAINT recettes_ingredients_ibfk_1 foreign key (id_ingredient) references ingredients (id),
+                                      CONSTRAINT recettes_ingredients_ibfk_2 foreign key (id_recette) references recettes (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
