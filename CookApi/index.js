@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
+
 const recettesRoutes = require('./routes/recettes');
 
-app.use(express.json()); // pour les requêtes JSON
+app.use(express.json()); // pour les requêtes JSON, middlware
 
 app.use('/recettes', recettesRoutes);
 
