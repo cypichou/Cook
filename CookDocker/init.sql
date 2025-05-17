@@ -27,7 +27,7 @@
 -- Drop all tables
 drop table if exists ingredients;
 DROP TABLE IF EXISTS saisons;
-drop table if exists timing;
+drop table if exists timings;
 drop table if exists categories;
 DROP TABLE IF EXISTS utilisateurs_recettes;
 drop table if exists semaines_pref;

@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-const db = require("../db");
-
 router.post('/', async (req, res) => {
     try {
         const {nom, prenom, sexe, mail, mdp, activite, objectifs, calories, proteines, lipides, glucides} = req.body;
@@ -22,9 +20,9 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const {id} = req.body;
+        const {id} = req.params;
 
         const [rows] = await db.query('select * from utilisateurs where id = ?',[id]);
 
