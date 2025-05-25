@@ -1,4 +1,4 @@
-import apiClient from "@/components/services/api-clients.ts";
+import apiClient from "@/services/api-clients.ts";
 
 const SendForms = <T extends { [s: string]: unknown }>(
     endpoint: string,

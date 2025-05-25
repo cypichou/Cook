@@ -1,4 +1,6 @@
-import {Grid, GridItem, Show} from "@chakra-ui/react";
+import {Grid, GridItem} from "@chakra-ui/react";
+import NavBar from "@/components/NavBar.tsx";
+import RecipesGrid from "@/components/RecipesGrid.tsx";
 
 function App() {
     return (
@@ -6,12 +8,14 @@ function App() {
             base: `"nav"  "main"`,
             lg: `"nav nav"  "aside main"`
         }}>
+            <GridItem area='nav'>
+                <NavBar/>
+            </GridItem>
+            <GridItem area='aside' hideBelow={"lg"}>Aside</GridItem>
             <GridItem area='nav'>Nav</GridItem>
-            <Show when={{ base: false, lg: true }}>
-                <GridItem area='aside'>Aside</GridItem>
-            </Show>
-            <GridItem area='nav'>Nav</GridItem>
-            <GridItem area='main'>Main</GridItem>
+            <GridItem area='main'>
+                <RecipesGrid/>
+            </GridItem>
         </Grid>
     )
 }

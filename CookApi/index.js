@@ -1,5 +1,7 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+
 
 const recettesRoutes = require('./routes/recettes');
 const ingredientsRoutes = require('./routes/ingredients');
@@ -10,6 +12,7 @@ const timingRoutes = require('./routes/timing');
 const saisonsRoutes = require('./routes/saisons');
 const categoriesRoutes = require('./routes/categorie');
 
+app.use(cors());
 app.use(express.json()); // pour les requêtes JSON, middlware
 
 app.use('/recettes', recettesRoutes);
