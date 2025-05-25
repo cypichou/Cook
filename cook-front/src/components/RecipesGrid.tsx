@@ -1,10 +1,9 @@
-import {useEffect, useState} from "react";
-import apiClient from "@/services/api-clients.ts";
 import {Text} from "@chakra-ui/react";
+import useData from "@/hooks/useData.ts";
 
-interface receipes {
-    rows:receipe[]
-}
+// interface receipes{
+//     rows:receipe[];
+// }
 
 interface receipe {
     id: number;
@@ -14,20 +13,14 @@ interface receipe {
 }
 
 const RecipesGrid = () => {
-    const [receipes, setReceipes] = useState<receipes>({rows:[]})
-    const [error, setError] = useState('')
 
-    useEffect(() => {
-        apiClient.get<receipes>('/recettes')
-            .then(res => setReceipes(res.data))
-            .catch(err => setError(err.message))
-    },[])
+    const {data,error} = useData<receipe>('recettes')
 
     return (
         <div>
             {error && <Text>{error}</Text>}
             <ul>
-                {receipes.rows.map(receipe =>
+                {data.map(receipe =>
                     <li key={receipe.id}>{receipe.nom}</li>
                 )}
             </ul>

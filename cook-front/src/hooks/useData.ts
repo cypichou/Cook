@@ -16,8 +16,8 @@ const useData = <T>(endpoint: string, requestConfig?: AxiosRequestConfig, deps?:
         apiClients
             .get<T[]>(endpoint, { signal: controller.signal, ...requestConfig }) // Envoie la requête avec la configuration fournie
             .then((res) => {
-
                 setData(res.data);
+                console.log(res);
                 setLoading(false);
             })
             .catch((err) => {
