@@ -18,7 +18,6 @@ const NavBar = () => {
 
 export default NavBar;
 
-
 // const $COMPONENT$ = () => {
 //     return (
 //         <div>

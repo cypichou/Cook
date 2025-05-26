@@ -1,18 +1,16 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const db = require('../db');
+
+import db from '../db.js';
 
 // Récupérer toutes les saisons
 router.get('/', async (req, res) => {
-    try{
-
-        const [rows] = await db.query("select * from saisons")
-
-        res.json({ message: 'Voici vos saisons', rows:rows });
-
-    }catch (err) {
+    try {
+        const [rows] = await db.query('SELECT * FROM saisons');
+        res.json({ message: 'Voici vos saisons', rows: rows });
+    } catch (err) {
         res.status(500).json({ error: err.message });
     }
-})
+});
 
-module.exports = router;
+export default router;

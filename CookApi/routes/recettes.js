@@ -1,6 +1,24 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const db = require('../db');
+import db from '../db.js';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const router = express.Router();
+
+// Config multer (tu peux le centraliser si tu veux)
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, '../receipesImage'),
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer({ storage });
 
 // recuperer toutes les recettes
 
@@ -15,13 +33,14 @@ router.get('/', async (req, res) => {
 
 // Ajouter une recette
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
     try {
         const { nom, temps_de_preparation, consignes } = req.body;
+        const imageUrl = req.file ? `/receipesImage/${Date.now() + '-'+req.file.filename}` : `/receipesImage/img.png`;
 
         const [rows] = await db.query(
-            'INSERT INTO recettes (nom, temps_de_preparation, consignes) VALUES (?, ?, ?)',
-            [nom, temps_de_preparation, consignes]
+            'INSERT INTO recettes (nom, temps_de_preparation, consignes, image_url) VALUES (?, ?, ?, ?)',
+            [nom, temps_de_preparation, consignes, imageUrl]
         );
 
         res.json({ message: 'Recette ajoutée avec succes', id: rows.insertId });
@@ -30,7 +49,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// récupérer tous les ingrédients des recettes
+// Récupérer tous les ingrédients des recettes
 
 router.get('/ingredients', async (req, res) => {
     try {
@@ -114,7 +133,4 @@ router.delete('/', async (req, res) => {
     }
 })
 
-
-
-
-module.exports = router;
+export default router;
