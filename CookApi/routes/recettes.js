@@ -9,8 +9,6 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const router = express.Router();
-
 // Config multer (tu peux le centraliser si tu veux)
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../receipesImage'),

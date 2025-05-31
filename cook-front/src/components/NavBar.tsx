@@ -2,6 +2,7 @@ import {HStack, Image, Text} from "@chakra-ui/react";
 import logo from "../assets/react.svg"
 import { ColorModeButton } from "@/components/ui/color-mode"
 import { useColorMode } from "@/components/ui/color-mode"
+import TimeRadio from "@/components/TimeRadio.tsx";
 
 const NavBar = () => {
     const { toggleColorMode } = useColorMode()
@@ -12,6 +13,7 @@ const NavBar = () => {
             <ColorModeButton variant="outline" onClick={toggleColorMode}>
                 Toggle Mode
             </ColorModeButton>
+            <TimeRadio/>
         </HStack>
     );
 };
