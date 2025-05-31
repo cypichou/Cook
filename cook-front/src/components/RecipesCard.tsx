@@ -3,14 +3,18 @@ import {Button, Card, HStack, Image, Text, VStack} from "@chakra-ui/react";
 import {baseURLconst} from "@/services/api-clients.ts";
 import {useColorModeValue} from "@/components/ui/color-mode.tsx";
 import TimeBadge from "@/components/TimeBadge.tsx";
-import { MdAdd } from "react-icons/md";
+import {MdAdd} from "react-icons/md";
+import {useState} from "react";
+import { IoIosRemove } from "react-icons/io";
 
 interface Props {
-    receipe : Receipe
+    receipe : Receipe;
+    addReceipe: (receipe : Receipe) => void;
 }
 
-const RecipesCard = ({receipe}:Props) => {
+const RecipesCard = ({receipe, addReceipe}:Props) => {
     const revertColor = useColorModeValue("white", "black")
+    const [add,setAdd] = useState<Boolean>(true)
 
     return (
         <>
@@ -34,13 +38,14 @@ const RecipesCard = ({receipe}:Props) => {
                                 {receipe.nom}
                             </Text>
 
-                            <Button colorPalette="green" color={revertColor} w="40px" h="40px" p={0} minW="unset">
-                                <MdAdd color={revertColor} />
+                            <Button colorPalette={add?"green":"red"} color={revertColor} w="40px" h="40px" p={0} minW="unset"
+                                    onClick={() => {addReceipe(receipe);setAdd(!add)}}>
+                                {add?<MdAdd color={revertColor}/>:<IoIosRemove color={revertColor}/>}
                             </Button>
 
                         </HStack>
 
-                        <TimeBadge time={receipe.temps_de_preparation} />
+                        <TimeBadge time={receipe.temps_de_preparation?receipe.temps_de_preparation:0} />
 
                     </VStack>
 

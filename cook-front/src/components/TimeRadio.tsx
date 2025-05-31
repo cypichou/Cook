@@ -1,21 +1,24 @@
 
 import { Button, Menu, Portal, useCheckboxGroup } from "@chakra-ui/react"
 import {IoTimerOutline} from "react-icons/io5";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const TimeRadio = () => {
     const group = useCheckboxGroup({ defaultValue: items.map(item => item.value) });
     const [times, setTimes] = useState<string[]>(["10", "20", "30"]);
 
     const handleToggle = (value: string) => {
-        setTimes((prevTimes) => {
-            if (prevTimes.includes(value)) {
-                return prevTimes.filter((item) => item !== value);
+            if (times.includes(value)) {
+                setTimes(times.filter((item) => item !== value)) ;
             } else {
-                return [...prevTimes, value];
+                setTimes([...times, value]) ;
             }
-        });
-    };
+    }
+
+    useEffect(() => {
+        console.log(times)
+    }, [times]);
+
 
     return (
         <Menu.Root closeOnSelect={false} >
