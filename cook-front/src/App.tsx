@@ -4,7 +4,7 @@ import RecipesGrid, {type Receipe} from "@/components/RecipesGrid.tsx";
 import ReceipesList from "@/components/ReceipesList.tsx";
 import {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import IngredientsListMaker from "@/components/IngredientsListMaker.tsx";
+import IngredientsListMaker from "@/components/MakerPage/IngredientsListMaker.tsx";
 
 
 function App() {
@@ -26,11 +26,10 @@ function App() {
 
             <Grid templateAreas ={{
                 base: `"nav"  "main"`,
-                lg: `"nav nav" "aside main"`
+                lg: `"nav " "main"`
             }}>
                 <GridItem area='nav'><NavBar/></GridItem>
 
-            {/*// composant afficher en fonction de l'url*/}
             <Routes>
                 <Route path="/" element={
                     <GridItem area='main'>
@@ -38,10 +37,12 @@ function App() {
                         <RecipesGrid addReceipe={handleToggle}/>
                     </GridItem>
                 } />
-                <Route path="/liste" element={<IngredientsListMaker />} />
+                <Route path="/liste" element={
+                    <GridItem area='main'>
+                        <IngredientsListMaker receipes={receipesList} />
+                    </GridItem>
+                } />
             </Routes>
-
-                <GridItem area='aside' hideBelow={"lg"}>Aside</GridItem>
 
             </Grid>
 

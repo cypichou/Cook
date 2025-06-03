@@ -51,10 +51,12 @@ router.post('/', upload.single('image'), async (req, res) => {
 
 router.get('/ingredients', async (req, res) => {
     try {
-        const { ids } = req.body; // on attend { ids: [1, 2, 3] }
+        let ids = req.query.ids;
 
-        if (!Array.isArray(ids) || ids.length === 0) {
-            return res.status(400).json({ error: 'Liste d’IDs invalide.' });
+        if (!Array.isArray(ids)) ids = [ids];
+
+        if (ids.length === 0) {
+            return res.status(400).json({ error: 'Liste d’IDs invalide.', res: req.query });
         }
 
         // Créer des placeholders dynamiques pour la requête IN (?,?,?)
@@ -62,20 +64,20 @@ router.get('/ingredients', async (req, res) => {
 
         const [rows] = await db.query(
             `
-      SELECT ing.nom,
-             rec.nom AS nom_recette,
+      SELECT ing.nom AS nom_ingredient,
              rec_ing.quantite,
-             ing.id_categorie
+             categ.nom AS categorie
       FROM recettes_ingredients AS rec_ing
       LEFT JOIN ingredients AS ing ON ing.id = rec_ing.id_ingredient
       LEFT JOIN recettes AS rec ON rec.id = rec_ing.id_recette
+      LEFT JOIN categories AS categ ON categ.id = ing.id_categorie
       WHERE rec.id IN (${placeholders})
-      GROUP BY rec.nom, ing.nom, rec_ing.quantite, ing.id_categorie
+      GROUP BY rec.nom, ing.nom, rec_ing.quantite, categ.nom
       `,
             ids
         );
 
-        res.json({ message: 'Ingrédients récupérés avec succés', rows:rows });
+        res.json( rows );
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });
