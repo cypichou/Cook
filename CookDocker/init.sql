@@ -143,6 +143,7 @@ create table recette_outils (
 CREATE TABLE recettes_ingredients (
                                       id_recette INT NOT NULL,
                                       id_ingredient int not null,
+                                      quantite float not null,
                                       PRIMARY KEY (id_recette,id_ingredient),
                                       KEY recette_id (id_recette),
                                       CONSTRAINT recettes_ingredients_ibfk_1 foreign key (id_ingredient) references ingredients (id),

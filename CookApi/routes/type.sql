@@ -1,1 +1,0 @@
-SELECT * FROM utilisateurs_recettes WHERE utilisateur_id=1

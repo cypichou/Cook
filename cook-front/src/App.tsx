@@ -12,7 +12,6 @@ function App() {
     const[receipesList, setReceipesList] = useState<Receipe[]>([]);
 
     const handleToggle = (value: Receipe) => {
-        console.log(receipesList.includes(value));
         if (receipesList.includes(value)) {
             setReceipesList(receipesList.filter((item) => item !== value)) ;
         } else {

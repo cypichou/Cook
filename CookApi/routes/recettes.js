@@ -64,15 +64,23 @@ router.get('/ingredients', async (req, res) => {
 
         const [rows] = await db.query(
             `
-      SELECT ing.nom AS nom_ingredient,
-             rec_ing.quantite,
-             categ.nom AS categorie
-      FROM recettes_ingredients AS rec_ing
-      LEFT JOIN ingredients AS ing ON ing.id = rec_ing.id_ingredient
-      LEFT JOIN recettes AS rec ON rec.id = rec_ing.id_recette
-      LEFT JOIN categories AS categ ON categ.id = ing.id_categorie
-      WHERE rec.id IN (${placeholders})
-      GROUP BY rec.nom, ing.nom, rec_ing.quantite, categ.nom
+        SELECT
+            rec.id AS id,
+            JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                            'quantite_ingredient', rec_ing.quantite,
+                            'categorie', categ.nom,
+                            'unite', categ.unite,
+                            'id',ing.id,
+                            'nom', ing.nom
+                    )
+            ) AS ingredients
+        FROM recettes_ingredients AS rec_ing
+                 LEFT JOIN ingredients AS ing ON ing.id = rec_ing.id_ingredient
+                 LEFT JOIN recettes AS rec ON rec.id = rec_ing.id_recette
+                 LEFT JOIN categories AS categ ON categ.id = ing.id_categorie
+        WHERE rec.id IN (${placeholders})
+        GROUP BY rec.id;
       `,
             ids
         );

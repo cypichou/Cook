@@ -1,7 +1,7 @@
 
 import { Button, Menu, Portal, useCheckboxGroup } from "@chakra-ui/react"
 import {IoTimerOutline} from "react-icons/io5";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 
 const TimeRadio = () => {
     const group = useCheckboxGroup({ defaultValue: items.map(item => item.value) });
@@ -14,10 +14,6 @@ const TimeRadio = () => {
                 setTimes([...times, value]) ;
             }
     }
-
-    useEffect(() => {
-        console.log(times)
-    }, [times]);
 
 
     return (
