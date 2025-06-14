@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseURLconst = "http://localhost:3000/";
+export const baseURLconst = "https://cook-production-c2c7.up.railway.app/";
 
 export const apiClient = axios.create({
     baseURL: baseURLconst,
