@@ -1,7 +1,7 @@
 import {Box, Button, Heading, SimpleGrid, Table} from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import type {Ingredient} from "@/components/MakerPage/IngredientsListMaker.tsx";
-import {use, useEffect} from "react";
+import { useEffect} from "react";
 
 export type IngredientsParCategorie = Record<string, Ingredients>;
 type Ingredients = Record<string, Ingredient>;
